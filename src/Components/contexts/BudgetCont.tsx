@@ -1,7 +1,6 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
 import UseLocalSrorage from "./UseLocalSrorage";
-import Swal from "sweetalert2";
 
 const BudgetCont = React.createContext({});
 export function useBudgets() {
@@ -44,43 +43,19 @@ export const BudgetProv = ({ children }: { children: React.ReactNode }) => {
     });
   }
   function deleteBudget({ id }: any) {
-    Swal.fire({
-      title: "Are you sure you want to delete a budget?",
-      showCancelButton: true,
-      confirmButtonColor: "#be4141",
-      cancelButtonColor: "#3E68AE",
-      confirmButtonText: " Yes",
-      cancelButtonText: "No",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        setExpenses((prevExpenses: any) => {
-          return prevExpenses.map((expense: any) => {
-            if (expense.budgetId !== id) return expense;
-            return { ...expense, budgetId: UNCATEGORIZED_BUDGET_ID };
-          });
-        });
-        setBudgets((prevBudgets: any[]) => {
-          return prevBudgets.filter(
-            (budget: { id: string }) => budget.id !== id
-          );
-        });
-      }
+    setExpenses((prevExpenses: any) => {
+      return prevExpenses.map((expense: any) => {
+        if (expense.budgetId !== id) return expense;
+        return { ...expense, budgetId: UNCATEGORIZED_BUDGET_ID };
+      });
+    });
+    setBudgets((prevBudgets: any[]) => {
+      return prevBudgets.filter((budget: { id: string }) => budget.id !== id);
     });
   }
   function deleteExpense({ id }: any) {
-    Swal.fire({
-      title: "Are you sure you want to delete?",
-      showCancelButton: true,
-      confirmButtonColor: "#be4141",
-      cancelButtonColor: "#3E68AE",
-      confirmButtonText: " Yes",
-      cancelButtonText: "No",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        setExpenses((prevExpenses: any) => {
-          return prevExpenses.filter((expenses: any) => expenses.id !== id);
-        });
-      }
+    setExpenses((prevExpenses: any) => {
+      return prevExpenses.filter((expenses: any) => expenses.id !== id);
     });
   }
 
